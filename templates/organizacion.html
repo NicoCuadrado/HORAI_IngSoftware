@@ -20,11 +20,37 @@
             background: #fff;
             padding: 20px 24px;
             border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .header h1 {
+        .header-left h1 {
             font-size: 24px;
             font-weight: 700;
             color: #1e293b;
+        }
+        .auth-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        .auth-btn-login {
+            background: #3b82f6;
+            color: white;
+        }
+        .auth-btn-login:hover {
+            background: #2563eb;
+        }
+        .auth-btn-logout {
+            background: #ef4444;
+            color: white;
+        }
+        .auth-btn-logout:hover {
+            background: #dc2626;
         }
         .container {
             max-width: 1200px;
@@ -254,7 +280,10 @@
 </head>
 <body>
     <div class="header">
-        <h1>Organización</h1>
+        <div class="header-left">
+            <h1>Organización</h1>
+        </div>
+        <button id="authBtn" class="auth-btn auth-btn-login">Iniciar sesión</button>
     </div>
 
     <div class="container">
@@ -345,6 +374,32 @@
     <script>
         // Funcionalidad básica
         document.addEventListener('DOMContentLoaded', function() {
+            // Manejo de sesión
+            const authBtn = document.getElementById('authBtn');
+            
+            const updateAuthBtn = () => {
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                if (isLoggedIn === 'true') {
+                    authBtn.textContent = 'Cerrar sesión';
+                    authBtn.className = 'auth-btn auth-btn-logout';
+                } else {
+                    authBtn.textContent = 'Iniciar sesión';
+                    authBtn.className = 'auth-btn auth-btn-login';
+                }
+            };
+            
+            authBtn.addEventListener('click', () => {
+                if (localStorage.getItem('isLoggedIn') === 'true') {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('userEmail');
+                    window.location.href = '/logout';
+                } else {
+                    window.location.href = '/login';
+                }
+            });
+            
+            updateAuthBtn();
+            
             // Agregar tarea con Enter
             document.querySelector('.add-task-input').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter' && this.value.trim()) {

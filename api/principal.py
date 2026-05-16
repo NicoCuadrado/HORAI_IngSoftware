@@ -33,6 +33,14 @@ def inicio(request: Request):
 def organizacion(request: Request):
     return HTMLResponse(render_template("organizacion.html", {"request": request}))
 
+@app.get("/login", response_class=HTMLResponse)
+def login(request: Request):
+    return HTMLResponse(render_template("login.html", {"request": request}))
+
+@app.get("/logout", response_class=HTMLResponse)
+def logout(request: Request):
+    return HTMLResponse(render_template("logout.html", {"request": request}))
+
 @app.get("/bienestar", response_class=HTMLResponse)
 def bienestar(request: Request):
     return HTMLResponse(render_template("bienestar.html", {"request": request}))

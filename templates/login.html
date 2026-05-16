@@ -133,7 +133,13 @@
         passwordError.textContent = 'Campo obligatorio.';
         valid = false;
       }
-      if (!valid) e.preventDefault();
+      if (valid) {
+        e.preventDefault();
+        // Guardar sesión en localStorage
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', email.value);
+        window.location.href = '/';
+      }
     });
   </script>
 </body>

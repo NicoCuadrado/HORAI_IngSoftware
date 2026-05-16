@@ -102,6 +102,34 @@
             transform: translateY(-1px);
         }
 
+        .auth-btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+        }
+
+        .auth-btn-login {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .auth-btn-login:hover {
+            background: #2563eb;
+        }
+
+        .auth-btn-logout {
+            background: #ef4444;
+            color: white;
+        }
+
+        .auth-btn-logout:hover {
+            background: #dc2626;
+        }
+
         .btn-danger {
             background: #dc2626;
             color: white;
@@ -332,6 +360,9 @@
                 <a href="/nuevo-chat" class="btn btn-primary">
                     Nuevo Chat
                 </a>
+                <button id="authBtn" class="btn btn-secondary auth-btn auth-btn-login">
+                    Iniciar sesión
+                </button>
             </div>
         </div>
 
@@ -429,5 +460,36 @@
             {% endif %}
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Manejo de sesión
+            const authBtn = document.getElementById('authBtn');
+            
+            const updateAuthBtn = () => {
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                if (isLoggedIn === 'true') {
+                    authBtn.textContent = 'Cerrar sesión';
+                    authBtn.className = 'btn btn-secondary auth-btn auth-btn-logout';
+                } else {
+                    authBtn.textContent = 'Iniciar sesión';
+                    authBtn.className = 'btn btn-secondary auth-btn auth-btn-login';
+                }
+            };
+            
+            authBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (localStorage.getItem('isLoggedIn') === 'true') {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('userEmail');
+                    window.location.href = '/logout';
+                } else {
+                    window.location.href = '/login';
+                }
+            });
+            
+            updateAuthBtn();
+        });
+    </script>
 </body>
 </html>
