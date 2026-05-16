@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Organización - HORAI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            padding-bottom: 80px;
+        }
+        .header {
+            background: #fff;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            display: flex;
+            gap: 24px;
+        }
+        .sidebar {
+            width: 200px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            height: fit-content;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .sidebar h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1e293b;
+        }
+        .filter-list {
+            list-style: none;
+        }
+        .filter-list li {
+            padding: 8px 0;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .filter-list li.active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        .main-content {
+            flex: 1;
+        }
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .tab {
+            background: #f1f5f9;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+            cursor: pointer;
+        }
+        .tab.active {
+            background: #3b82f6;
+            color: white;
+        }
+        .add-task-container {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .add-task-input {
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+        .tasks-section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .tasks-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        .task-text {
+            font-size: 14px;
+            color: #374151;
+        }
+        .task-priority {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        .alta { background: #fee2e2; color: #dc2626; }
+        .media { background: #fef3c7; color: #d97706; }
+        .baja { background: #d1fae5; color: #059669; }
+        .matutina { background: #dbeafe; color: #2563eb; }
+        .calendar-sidebar {
+            width: 280px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            height: fit-content;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .calendar-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1e293b;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .calendar-day {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #64748b;
+            cursor: pointer;
+        }
+        .calendar-day.today {
+            background: #3b82f6;
+            color: white;
+            border-radius: 4px;
+        }
+        .suggestions {
+            background: #fef7ed;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .suggestions-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ea580c;
+            margin-bottom: 8px;
+        }
+        .suggestion-text {
+            font-size: 13px;
+            color: #9a3412;
+            line-height: 1.4;
+        }
+        .pause-btn {
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #e2e8f0;
+            padding: 12px 0;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            z-index: 10;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 16px;
+        }
+        .nav-btn.active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        .chat-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: #f97316;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(249,115,22,0.3);
+            cursor: pointer;
+            z-index: 20;
+            text-decoration: none;
+        }
+        .chat-icon {
+            color: white;
+            font-size: 24px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 16px;
+            }
+            .sidebar, .calendar-sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Organización</h1>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h3>Filtros</h3>
+            <ul class="filter-list">
+                <li class="active">Hoy</li>
+                <li>Esta semana</li>
+                <li>Vencidas</li>
+                <li>Prioridad alta</li>
+                <li>Con recordatorio</li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="tabs">
+                <button class="tab active">Lista</button>
+                <button class="tab">Calendario</button>
+            </div>
+
+            <div class="add-task-container">
+                <input class="add-task-input" type="text" placeholder="Añadir tarea... (Enter para guardar)">
+            </div>
+
+            <div class="tasks-section">
+                <div class="tasks-title">Tareas</div>
+                <div class="task-item">
+                    <div class="task-text">Terminar informe semanal</div>
+                    <div class="task-priority alta">Alta</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-text">Planificar menú de la semana</div>
+                    <div class="task-priority media">Media</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-text">Responder emails pendientes</div>
+                    <div class="task-priority baja">Baja</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-text">Reunión con equipo</div>
+                    <div class="task-priority alta">Alta</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-text">Comprar insumos</div>
+                    <div class="task-priority matutina">Matutina</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-text">Revisar objetivos del mes</div>
+                    <div class="task-priority matutina">Matutina</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calendar-sidebar">
+            <div class="calendar-title">Calendario semanal</div>
+            <div class="calendar-grid">
+                <div class="calendar-day">L</div>
+                <div class="calendar-day">M</div>
+                <div class="calendar-day">M</div>
+                <div class="calendar-day">J</div>
+                <div class="calendar-day">V</div>
+                <div class="calendar-day">S</div>
+                <div class="calendar-day today">D</div>
+            </div>
+
+            <div class="suggestions">
+                <div class="suggestions-title">Sugerencias</div>
+                <div class="suggestion-text">
+                    Hiciste un trabajo que trabajaste 50 min seguidos.<br>
+                    Toma una pausa de 5 min 🧡
+                </div>
+                <button class="pause-btn">Iniciar pausa</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="nav-btn" onclick="window.location.href='/'">Inicio</button>
+        <button class="nav-btn active" onclick="window.location.href='/organizacion'">Organización</button>
+        <button class="nav-btn" onclick="window.location.href='/bienestar'">Bienestar</button>
+        <button class="nav-btn" onclick="window.location.href='/progreso'">Progreso</button>
+    </div>
+
+    <a href="/chat" class="chat-fab">
+        <span class="chat-icon">💬</span>
+    </a>
+
+    <script>
+        // Funcionalidad básica
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar tarea con Enter
+            document.querySelector('.add-task-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && this.value.trim()) {
+                    console.log('Nueva tarea:', this.value);
+                    this.value = '';
+                }
+            });
+
+            // Filtros
+            document.querySelectorAll('.filter-list li').forEach(filter => {
+                filter.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-list li').forEach(f => f.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

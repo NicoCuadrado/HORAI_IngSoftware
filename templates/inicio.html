@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>HORAI - Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            padding-bottom: 80px;
+        }
+        .header {
+            background: #fff;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .header p {
+            color: #64748b;
+            margin-top: 4px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .method-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .method-card:hover {
+            background: #e2e8f0;
+        }
+        .method-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .method-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #475569;
+        }
+        .chart-container {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chart-placeholder {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .breathing-exercise {
+            text-align: center;
+            padding: 20px;
+        }
+        .breathing-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .breathing-text {
+            font-size: 16px;
+            color: #374151;
+            margin-bottom: 16px;
+        }
+        .start-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .habits-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .habit-item {
+            background: #fef3c7;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .gratitude-card {
+            background: #f0f9ff;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .gratitude-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0369a1;
+            margin-bottom: 12px;
+        }
+        .gratitude-item {
+            background: #e0f2fe;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            color: #0c4a6e;
+            font-size: 14px;
+        }
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #e2e8f0;
+            padding: 12px 0;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            z-index: 10;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 16px;
+            transition: color 0.2s;
+        }
+        .nav-btn.active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        .chat-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: #f97316;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(249,115,22,0.3);
+            cursor: pointer;
+            z-index: 20;
+            text-decoration: none;
+        }
+        .chat-fab:hover {
+            background: #ea580c;
+        }
+        .chat-icon {
+            color: white;
+            font-size: 24px;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .methods-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .habits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Bienestar</h1>
+        <p>Cuida tu bienestar mental y físico desde aquí</p>
+    </div>
+
+    <div class="container">
+        <div class="grid">
+            <!-- Métodos de Ánimo -->
+            <div class="section">
+                <div class="section-title">Registrar método de ánimo</div>
+                <div class="methods-grid">
+                    <div class="method-card">
+                        <div class="method-icon">😊</div>
+                        <div class="method-name">Sonreír</div>
+                    </div>
+                    <div class="method-card">
+                        <div class="method-icon">🎵</div>
+                        <div class="method-name">Música</div>
+                    </div>
+                    <div class="method-card">
+                        <div class="method-icon">🚶</div>
+                        <div class="method-name">Caminar</div>
+                    </div>
+                    <div class="method-card">
+                        <div class="method-icon">☕</div>
+                        <div class="method-name">Café</div>
+                    </div>
+                    <div class="method-card">
+                        <div class="method-icon">📚</div>
+                        <div class="method-name">Leer</div>
+                    </div>
+                    <div class="method-card">
+                        <div class="method-icon">🧘</div>
+                        <div class="method-name">Meditar</div>
+                    </div>
+                </div>
+                <button class="start-btn">Guardar</button>
+            </div>
+
+            <!-- Patrones Emocionales -->
+            <div class="section">
+                <div class="section-title">Patrones emocionales (semanal)</div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">📊 Gráfico de emociones de la semana</div>
+                </div>
+            </div>
+
+            <!-- Ejercicio de Respiración -->
+            <div class="section">
+                <div class="section-title">Ejercicio de respiración 4-7-8</div>
+                <div class="breathing-exercise">
+                    <div class="breathing-circle">4-7-8</div>
+                    <div class="breathing-text">Inhala por 4 segundos</div>
+                    <button class="start-btn">Iniciar</button>
+                </div>
+            </div>
+
+            <!-- Hábitos -->
+            <div class="section">
+                <div class="section-title">Hábitos de hoy</div>
+                <div class="habits-grid">
+                    <div class="habit-item">💧</div>
+                    <div class="habit-item">🥗</div>
+                    <div class="habit-item">🏃</div>
+                    <div class="habit-item">😴</div>
+                </div>
+                <div class="gratitude-card">
+                    <div class="gratitude-title">Gratitud</div>
+                    <div class="gratitude-item">Estar con mi familia</div>
+                    <div class="gratitude-item">Tener trabajo</div>
+                    <div class="gratitude-item">Disfrutar de un día soleado</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="nav-btn active" onclick="window.location.href='/'">Inicio</button>
+        <button class="nav-btn" onclick="window.location.href='/organizacion'">Organización</button>
+        <button class="nav-btn" onclick="window.location.href='/bienestar'">Bienestar</button>
+        <button class="nav-btn" onclick="window.location.href='/progreso'">Progreso</button>
+    </div>
+
+    <a href="/chat" class="chat-fab">
+        <span class="chat-icon">💬</span>
+    </a>
+
+    <script>
+        // Funcionalidad básica sin errores
+        document.addEventListener('DOMContentLoaded', function() {
+            // Métodos de ánimo
+            document.querySelectorAll('.method-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.background = '#dbeafe';
+                    setTimeout(() => {
+                        this.style.background = '#f8fafc';
+                    }, 200);
+                });
+            });
+
+            // Hábitos
+            document.querySelectorAll('.habit-item').forEach(habit => {
+                habit.addEventListener('click', function() {
+                    if (this.style.background === 'rgb(34, 197, 94)') {
+                        this.style.background = '#fef3c7';
+                    } else {
+                        this.style.background = '#22c55e';
+                        this.style.color = 'white';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

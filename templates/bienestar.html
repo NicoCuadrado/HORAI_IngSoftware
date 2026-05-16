@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienestar - HORAI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            padding-bottom: 80px;
+        }
+        .header {
+            background: #fff;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .header p {
+            color: #64748b;
+            margin-top: 4px;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        .mood-section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .mood-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+        .mood-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .mood-tab {
+            background: #f1f5f9;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+            cursor: pointer;
+        }
+        .mood-tab.active {
+            background: #3b82f6;
+            color: white;
+        }
+        .mood-options {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .mood-option {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 80px;
+        }
+        .mood-option:hover {
+            border-color: #3b82f6;
+            background: #f0f9ff;
+        }
+        .mood-option.selected {
+            border-color: #3b82f6;
+            background: #dbeafe;
+        }
+        .mood-emoji {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .mood-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .stat-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+        .time-display {
+            font-size: 48px;
+            font-weight: 700;
+            color: #3b82f6;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .time-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .control-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .control-btn.secondary {
+            background: #6b7280;
+        }
+        .suggestions-card {
+            background: #fef7ed;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .suggestions-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ea580c;
+            margin-bottom: 16px;
+        }
+        .suggestion-item {
+            background: #fff;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            color: #9a3412;
+            font-size: 14px;
+        }
+        .progress-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .progress-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .progress-item:last-child {
+            border-bottom: none;
+        }
+        .progress-label {
+            font-size: 14px;
+            color: #374151;
+        }
+        .progress-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #3b82f6;
+        }
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #e2e8f0;
+            padding: 12px 0;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            z-index: 10;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 16px;
+        }
+        .nav-btn.active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        .chat-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: #f97316;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(249,115,22,0.3);
+            cursor: pointer;
+            z-index: 20;
+            text-decoration: none;
+        }
+        .chat-icon {
+            color: white;
+            font-size: 24px;
+        }
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .mood-options {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Hola, ¿cómo te sentís hoy?</h1>
+        <p>Tu bienestar es importante</p>
+    </div>
+
+    <div class="container">
+        <!-- Clima emocional -->
+        <div class="mood-section">
+            <div class="mood-tabs">
+                <button class="mood-tab active">Clima emocional de hoy</button>
+                <button class="mood-tab">Patrones emocionales</button>
+            </div>
+            <div class="mood-options">
+                <div class="mood-option selected">
+                    <div class="mood-emoji">😊</div>
+                    <div class="mood-label">Contento</div>
+                </div>
+                <div class="mood-option">
+                    <div class="mood-emoji">😐</div>
+                    <div class="mood-label">Neutral</div>
+                </div>
+                <div class="mood-option">
+                    <div class="mood-emoji">😔</div>
+                    <div class="mood-label">Triste</div>
+                </div>
+                <div class="mood-option">
+                    <div class="mood-emoji">😤</div>
+                    <div class="mood-label">Estresado</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-title">Tiempo de reflexión</div>
+                <div class="time-display">25 min</div>
+                <div class="time-controls">
+                    <button class="control-btn">▶ Registrar ahora</button>
+                    <button class="control-btn secondary">⏸ Registrar estado de ánimo</button>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Frase del día</div>
+                <p style="text-align: center; font-size: 16px; color: #6b7280; line-height: 1.5; margin: 20px 0;">
+                    "Todo lo que puedes con todo tu corazón"
+                </p>
+                <div style="text-align: center;">
+                    <button class="control-btn">📖 Leer pensamiento del día</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sugerencias -->
+        <div class="suggestions-card">
+            <div class="suggestions-title">Sugerencias del día</div>
+            <div class="suggestion-item">Explora para mejorar tu rendimiento y compostura en los deportes, tareas, etc.</div>
+        </div>
+
+        <!-- Progreso -->
+        <div class="progress-card">
+            <div class="progress-title">Progreso</div>
+            <div class="progress-item">
+                <div class="progress-label">Días de reflexión completados</div>
+                <div class="progress-value">7</div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-label">Promedio de estado emocional</div>
+                <div class="progress-value">85%</div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-label">Hábitos completados esta semana</div>
+                <div class="progress-value">15/21</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="nav-btn" onclick="window.location.href='/'">Inicio</button>
+        <button class="nav-btn" onclick="window.location.href='/organizacion'">Organización</button>
+        <button class="nav-btn active" onclick="window.location.href='/bienestar'">Bienestar</button>
+        <button class="nav-btn" onclick="window.location.href='/progreso'">Progreso</button>
+    </div>
+
+    <a href="/chat" class="chat-fab">
+        <span class="chat-icon">💬</span>
+    </a>
+
+    <script>
+        // Funcionalidad básica
+        document.addEventListener('DOMContentLoaded', function() {
+            // Estados de ánimo
+            document.querySelectorAll('.mood-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
